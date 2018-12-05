@@ -1,17 +1,32 @@
-node('testing') {
-    stage('Initialize') {
-        echo 'Initializing...'
-        def node = tool name: 'Node-11.3.0', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-        env.PATH = "${node}/bin:${env.PATH}"
+pipeline {
+  agent any
+
+  tools {nodejs "node"}
+
+  stages {
+
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/raymonschouwenaar/jenkins-node-test'
+      }
     }
 
-    stage('Checkout') {
-        echo 'Getting source code...'
-        checkout scm
+    stage('Install dependencies') {
+      steps {
+        sh 'npm install'
+      }
     }
 
-    stage('Script') {
-        echo 'Run node script.js'
-        sh 'node script.js'
+    stage('Test') {
+      steps {
+         sh 'npm test'
+      }
     }
+
+    stage('Run') {
+      steps {
+         sh 'node script.js'
+      }
+    }
+  }
 }
