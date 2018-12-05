@@ -1,1 +1,1 @@
-console.log('It just works!')
+console.log('✅ It just works!')
