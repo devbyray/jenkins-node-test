@@ -17,12 +17,6 @@ pipeline {
       }
     }
 
-    stage('Test') {
-      steps {
-         sh 'npm test'
-      }
-    }
-
     stage('Run') {
       steps {
          sh 'node script.js'
